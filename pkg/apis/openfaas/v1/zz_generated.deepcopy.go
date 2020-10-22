@@ -147,6 +147,11 @@ func (in *FunctionSpec) DeepCopyInto(out *FunctionSpec) {
 		*out = new(FunctionResources)
 		**out = **in
 	}
+	if in.RunAsJob != nil {
+		in, out := &in.RunAsJob, &out.RunAsJob
+		*out = new(bool)
+		**out = **in
+	}
 	return
 }
 
