@@ -42,6 +42,7 @@ func functionToFunctionRequest(in *faasv1.Function) types.FunctionDeployment {
 		Limits:                 lim,
 		Requests:               req,
 		ReadOnlyRootFilesystem: in.Spec.ReadOnlyRootFilesystem,
+		RunAsJob:               in.Spec.RunAsJob,
 	}
 }
 
