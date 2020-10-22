@@ -49,9 +49,6 @@ type FunctionDeployment struct {
 
 	// Namespace for the function to be deployed into
 	Namespace string `json:"namespace,omitempty"`
-
-	// +optional
-	RunAsJob *bool `json:"runAsJob,omitempty"`
 }
 
 // FunctionResources Memory and CPU
