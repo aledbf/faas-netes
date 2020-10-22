@@ -1,20 +1,33 @@
 sudo: required
+dist: bionic
 
 language: go
-
 go:
-  - 1.13.x
-
-install:
-  - "echo helm now installed via scripts."
+  - "1.15.x"
 
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+before_install:
+  - sudo rm -rf /var/lib/apt/lists/*
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - mkdir -vp ~/.docker/cli-plugins/
+  - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+  - chmod a+x ~/.docker/cli-plugins/docker-buildx
+
+install:
+  - "echo helm now installed via scripts."
+
 before_script:
-- bash contrib/set_travis_experimental_mode.sh
-- curl -sSLf https://get.docker.com | sed s/sleep\ 20/sleep\ 0/g | sudo -E sh
-- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
 script:
   - make build
@@ -31,17 +44,16 @@ script:
   - ./contrib/stop_dev.sh
 
 after_success:
-    - if [ -z $DOCKER_NS ] ; then
-        export DOCKER_NS=openfaas;
-        fi
+  - if [ -z $DOCKER_NS ] ; then
+      export DOCKER_NS=openfaas;
+    fi
 
-    - if [ ! -z "$TRAVIS_TAG" ] ; then
-        docker tag $DOCKER_NS/faas-netes:latest $DOCKER_NS/faas-netes:$TRAVIS_TAG;
-        echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
-        docker push $DOCKER_NS/faas-netes:$TRAVIS_TAG;
+  - if [ ! -z "$TRAVIS_TAG" ] ; then
+      docker tag $DOCKER_NS/faas-netes:latest $DOCKER_NS/faas-netes:$TRAVIS_TAG;
+      echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
+      docker push $DOCKER_NS/faas-netes:$TRAVIS_TAG;
 
-        docker tag $DOCKER_NS/faas-netes:latest quay.io/$DOCKER_NS/faas-netes:$TRAVIS_TAG;
-        echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
-        docker push quay.io/$DOCKER_NS/faas-netes:$TRAVIS_TAG;
-
-        fi
+      docker tag $DOCKER_NS/faas-netes:latest quay.io/$DOCKER_NS/faas-netes:$TRAVIS_TAG;
+      echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
+      docker push quay.io/$DOCKER_NS/faas-netes:$TRAVIS_TAG;
+    fi

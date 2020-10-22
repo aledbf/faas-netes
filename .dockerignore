@@ -1,7 +1,5 @@
 ./faas-netes
 /yaml
-/yaml_armhf
-/yaml_arm64
 /chart
 /contrib
 /artifacts
