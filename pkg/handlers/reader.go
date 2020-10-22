@@ -15,7 +15,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 
 	"github.com/openfaas/faas-netes/pkg/k8s"
 )

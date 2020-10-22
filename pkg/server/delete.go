@@ -9,7 +9,7 @@ import (
 	clientset "github.com/openfaas/faas-netes/pkg/client/clientset/versioned"
 	"github.com/openfaas/faas/gateway/requests"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 )
 
 func makeDeleteHandler(defaultNamespace string, client clientset.Interface) http.HandlerFunc {

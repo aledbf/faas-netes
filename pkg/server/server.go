@@ -21,7 +21,7 @@ import (
 	appsinformer "k8s.io/client-go/informers/apps/v1"
 	coreinformer "k8s.io/client-go/informers/core/v1"
 	"k8s.io/client-go/kubernetes"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 )
 
 // TODO: Move to config pattern used else-where across project

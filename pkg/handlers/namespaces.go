@@ -15,7 +15,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 )
 
 // MakeNamespacesLister builds a list of namespaces with an "openfaas" tag, or the default name

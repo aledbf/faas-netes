@@ -21,7 +21,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/client-go/util/workqueue"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 
 	faasv1 "github.com/openfaas/faas-netes/pkg/apis/openfaas/v1"
 	clientset "github.com/openfaas/faas-netes/pkg/client/clientset/versioned"

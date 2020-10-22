@@ -15,7 +15,7 @@ import (
 	"github.com/openfaas/faas-provider/types"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 )
 
 // MakeReplicaUpdater updates desired count of replicas

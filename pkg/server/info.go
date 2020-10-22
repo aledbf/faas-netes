@@ -6,7 +6,7 @@ import (
 
 	"github.com/openfaas/faas-netes/version"
 	"github.com/openfaas/faas-provider/types"
-	glog "k8s.io/klog"
+	glog "k8s.io/klog/v2"
 )
 
 // makeInfoHandler provides the system/info endpoint
